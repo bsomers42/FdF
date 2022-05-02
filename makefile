@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/22 10:36:12 by bsomers       #+#    #+#                  #
-#    Updated: 2022/05/02 15:54:55 by bsomers       ########   odam.nl          #
+#    Updated: 2022/05/02 17:14:31 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,10 +44,13 @@ $(LIBMLX).a:
 clean:
 		rm -f $(OBJ)
 		@make clean -C $(LIBFT)
+		@make clean -C ./mlx
+
 
 fclean: clean
 		rm -f $(NAME)
 		rm -f $(LIBFT).a
+		rm -f $(LIBMLX).a
 		@make fclean -C $(LIBFT)
 
 re:
