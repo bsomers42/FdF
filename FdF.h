@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/22 13:51:39 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/05/09 15:57:13 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/05/16 16:39:27 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,11 @@ typedef struct	s_map
 
 
 void    if_error(char *str);
-int	**parse_map(char *argv[], t_map *map);
+int	parse_map(char *argv[], t_map *map);
 void    draw_tile(t_struct *info,/* t_map *map, */int x, int y, int color);
+void    draw_horizontal(t_struct *info, t_map *map, int x, int y, int color);
+void    draw_vertical(t_struct *info, t_map *map, int x, int y, int color);
+
 void	pixel_put(t_struct *info, int x, int y, int color);
 
 

@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/22 10:32:41 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/05/11 14:13:11 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/05/16 17:01:47 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,21 @@ void	fdf(t_map *map)
 	void *mlxptr;
 	void *window;
 	int i;
-	int j = 0;
-	int color;
+	// int j = 0;
+	int color_h;
+	int color_v;
 	int x;
 	// int a;
 	// int b;
 
 
-	color = 0x0fffffe;
+	color_v = 0x0fffffe;
+	color_h = 0xeb4034;
 	calc_size_window(map);
 	if ((map->win_h * 1.5) == map->win_w)
 		x = (map->win_w / 2) + 25;
 	else
 		x = (map->win_w / 3) + 25;
-	// if (map->y > map->x)
-	// {
-	// 	a = (map->x + map->y);
-	// 	b = map->y / a;
-	// 	x = (b) * map->win_w;
-	// }
-	// else
-	// {
-	// 	a = (map->x + map->y);
-	// 	b = map->x / a;
-	// 	x = (b) * map->win_w;
-	// }
-	//int x = map->win_w * 0.35;
 	int y = map->y * 2;
 
 	ft_printf("x: %d, y: %d\n", map->x, map->y);
@@ -75,20 +64,24 @@ void	fdf(t_map *map)
 	window = mlx_new_window(mlxptr, map->win_w, map->win_h, "FdF bsomers");
 	info.img = mlx_new_image(mlxptr, map->win_w, map->win_h);
 	info.addr = mlx_get_data_addr(info.img, &info.bpp, &info.len_line, &info.endian);
-	while (j < map->y)
-	{
-		while (i < map->x)
-		{
-			draw_tile(&info, /*map,*/ x, y, color);
-			x = x + 20;
-			y = y + 10;
-			i++;
-		}
-		x = x - ((i + 1) * 20);
-		y = y - ((i - 1) * 10);
-		i = 0;
-		j++;
-	}
+	// while (j < map->y)////////////////Per tile///////
+	// {
+	// 	while (i < map->x)
+	// 	{
+	// 		draw_tile(&info, /*map,*/ x, y, color);
+	// 		x = x + 20;
+	// 		y = y + 10;
+	// 		i++;
+	// 	}
+	// 	x = x - ((i + 1) * 20);
+	// 	y = y - ((i - 1) * 10);
+	// 	i = 0;
+	// 	j++;
+	// }/////////////////////////////////Per tile///////
+
+	draw_horizontal(&info, map, x, y, color_h);
+	draw_vertical(&info, map, x, y, color_v);
+
 	mlx_put_image_to_window(mlxptr, window, info.img, 0, 0);
 	mlx_loop(mlxptr);
 }
@@ -97,7 +90,7 @@ int	main(int argc, char *argv[])
 {
 	t_map map;
 
-	map.map = parse_map(argv, &map);
+	/*map.map = */parse_map(argv, &map);
 	fdf(&map);
 	argc = 1; //weghalen
 }
