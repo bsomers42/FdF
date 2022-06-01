@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/22 10:32:41 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/05/16 17:01:47 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/06/01 12:38:25 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 // mlx_new_image(); //maniulate images
 // mlx_loop(); //handle keyboard our mouse events
 
-void	pixel_put(t_struct *info, int x, int y, int color)
+void	pixel_put(t_struct *info, int *x, int *y, int color)
 {
 	char *dst;
 
-	dst = info->addr + (y * info->len_line + x * (info->bpp / 8));
+	dst = info->addr + (*y * info->len_line + *x * (info->bpp / 8));
 	*(unsigned int*)dst = color;
 }
 
@@ -36,10 +36,11 @@ void	calc_size_window(t_map *map)
 void	fdf(t_map *map)
 {
 	t_struct info;
+	t_draw draw;
 	void *mlxptr;
 	void *window;
 	int i;
-	// int j = 0;
+	int j = 0;
 	int color_h;
 	int color_v;
 	int x;
@@ -54,7 +55,7 @@ void	fdf(t_map *map)
 		x = (map->win_w / 2) + 25;
 	else
 		x = (map->win_w / 3) + 25;
-	int y = map->y * 2;
+	//int y = map->y * 2;
 
 	ft_printf("x: %d, y: %d\n", map->x, map->y);
 	i = 0;
@@ -79,8 +80,32 @@ void	fdf(t_map *map)
 	// 	j++;
 	// }/////////////////////////////////Per tile///////
 
-	draw_horizontal(&info, map, x, y, color_h);
-	draw_vertical(&info, map, x, y, color_v);
+	// draw_horizontal(&info, map, x, y, color_h);
+	// draw_vertical(&info, map, x, y, color_v);
+	draw.x = 150;
+	draw.y = 10;
+	draw.y_prev = -1;
+	while (i < map->y)
+	{
+		while (j < map->x)
+		{
+			draw.x = 150 + j*10;
+			draw.y = 10 + i*10;
+			//draw.x = draw.x + j*10;
+			//draw.y = draw.y + i*10;
+			// if (i == 0 && j == 0)
+			// {
+			// 	draw.x = i + 200;
+			// 	draw.y = j + 200;
+			// }
+			calc_coord(&draw, map->map[i][j], &info);
+			j++;
+		}
+		// draw.x = draw.x - 0.5;
+		// draw.y = draw.y - 1;
+		j = 0;
+		i++;
+	}
 
 	mlx_put_image_to_window(mlxptr, window, info.img, 0, 0);
 	mlx_loop(mlxptr);
