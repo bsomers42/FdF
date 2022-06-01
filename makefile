@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/22 10:36:12 by bsomers       #+#    #+#                  #
-#    Updated: 2022/05/09 16:48:32 by bsomers       ########   odam.nl          #
+#    Updated: 2022/06/01 16:38:00 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ LIBMLX = libmlx
 SRC = FdF.c \
 		FdF_utils.c \
 		FdF_parse.c \
-		FdF_draw.c
+		FdF_draw.c \
+		FdF_bresenham.c
 
 HEADER = FdF.h
 

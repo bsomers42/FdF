@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/22 13:51:39 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/06/01 15:54:24 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/06/01 17:52:05 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@
 #define RED 0xeb4034
 #define WHITE 0x0fffffe
 
-typedef struct	s_struct
+typedef struct	s_str
 {
     void *img;
 	char *addr;
 	int bpp;
-	int len_line;
+	int len;
 	int endian;
-}				t_struct;
+}				t_str;
 
 typedef struct	s_map
 {
@@ -51,16 +51,29 @@ typedef struct	s_draw
 	int **map_y;
 }				t_draw;
 
+typedef struct	s_br
+{
+	int x;
+	int	y;
+	int dx;
+	int dy;
+	int dx1;
+	int dy1;
+	int px;
+	int py;
+	int xe;
+	int ye;
+	int i;
+	int x1;
+	int x2;
+	int y1;
+	int y2;
+}				t_br;
+
 void    if_error(char *str);
 int	parse_map(char *argv[], t_map *map);
-void    draw_tile(t_struct *info,/* t_map *map, */int x, int y, int color);
-void    draw_horizontal(t_struct *info, t_map *map, int x, int y, int color);
-void    draw_vertical(t_struct *info, t_map *map, int x, int y, int color);
-void	calc_coord_horiz(t_draw *draw, int z, t_struct *info);//, int mapx, int i);
-void	draw_between_coord_v(int x0, int y0, int x1, int y1, t_struct *info);
-void	calc_coord_vert(t_draw *draw, int z, t_struct *info);
-void	pixel_put(t_struct *info, int *x, int *y, int color);
-void	bresenham_g(int x0, int y0, int x1, int y1, t_struct *info);
-void	bresenham_r(int x0, int y0, int x1, int y1, t_struct *info);
+void	pixel_put(t_str *info, int *x, int *y, int color);
+void	make_raster(t_draw *draw, t_map *map, t_str *info);
+void	bresenham(t_br *br, t_str *info);
 
 #endif
