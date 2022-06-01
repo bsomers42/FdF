@@ -6,11 +6,12 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/22 10:32:41 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/06/01 12:38:25 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/06/01 15:54:33 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "FdF.h"
+#include <stdio.h> //eeesegkjfbnkjtn!!
 
 // mlx_init(); //sets up connection to graphical system. If it fails, it returns NULL.
 
@@ -82,6 +83,23 @@ void	fdf(t_map *map)
 
 	// draw_horizontal(&info, map, x, y, color_h);
 	// draw_vertical(&info, map, x, y, color_v);
+	i = 0;
+	j = 0;
+	draw.map_x = malloc(map->y * sizeof(int *));
+	draw.map_y = malloc(map->y * sizeof(int *));
+	while (i < map->y)
+	{
+		while (j < map->x)
+		{
+			draw.map_x[i] = malloc(map->x * sizeof(int));
+			draw.map_y[i] = malloc(map->x * sizeof(int));
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	i = 0;
+	j = 0;
 	draw.x = 150;
 	draw.y = 10;
 	draw.y_prev = -1;
@@ -89,21 +107,37 @@ void	fdf(t_map *map)
 	{
 		while (j < map->x)
 		{
-			draw.x = 150 + j*10;
-			draw.y = 10 + i*10;
-			//draw.x = draw.x + j*10;
-			//draw.y = draw.y + i*10;
-			// if (i == 0 && j == 0)
-			// {
-			// 	draw.x = i + 200;
-			// 	draw.y = j + 200;
-			// }
-			calc_coord(&draw, map->map[i][j], &info);
+			draw.x = 150 + j*14;
+			draw.y = 10 + i*14;
+			calc_coord_horiz(&draw, map->map[i][j], &info);//, map->x, j);
+			//if (draw.y_prev > 0)// && (j + 1) < map->x)
+				// bresenham_r(draw.x_prev, draw.y_prev, draw.x, draw.y, &info);
+
+			draw.map_x[i][j] = draw.x;
+			draw.map_y[i][j] = draw.y;
+			printf("draw.map_y: %d, draw.map_x: %d\n", draw.map_x[i][j], draw.map_y[i][j]);
+
 			j++;
 		}
-		// draw.x = draw.x - 0.5;
-		// draw.y = draw.y - 1;
 		j = 0;
+		i++;
+	}
+	draw.y_prev = -1;
+	j = 1;
+	i = 0;
+	while (i < map->x)
+	{
+		while (j < map->y)
+		{
+			printf("--prev x: %d, prev y: %d, x1: %d, y1: %d\n", draw.map_x[j - 1][i], draw.map_y[j - 1][i], draw.map_x[j][i], draw.map_y[j][i]);
+
+			//THIS ONE WORKSdraw_between_coord_v(draw.map_x[j][i], draw.map_y[j][i], draw.map_x[j - 1][i], draw.map_y[j - 1][i], &info);
+			//draw_between_coord_v(draw.map_x[j - 1][i], draw.map_y[j - 1][i], draw.map_x[j][i], draw.map_y[j][i],  &info);
+			bresenham_g(draw.map_x[j - 1][i], draw.map_y[j - 1][i], draw.map_x[j][i], draw.map_y[j][i],  &info);
+			//Bresenham works here!
+			j++;
+		}
+		j = 1;
 		i++;
 	}
 
