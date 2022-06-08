@@ -6,13 +6,13 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/01 16:12:07 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/06/01 17:46:38 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/06/08 19:59:21 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "FdF.h"
 
-void	loop_x_oct(t_str *info, t_br *br)
+void	loop_x_oct(/*t_str *info, */t_br *br, mlx_image_t *g_img)
 {
 	while (br->x < br->xe)
 	{
@@ -27,12 +27,20 @@ void	loop_x_oct(t_str *info, t_br *br)
 				br->y = br->y - 1;
 			br->px = br->px + 2 * (br->dy1 - br->dx1);
 		}
-		pixel_put(info, &br->x, &br->y, WHITE);
+		//pixel_put(info, &br->x, &br->y, WHITE);
+		// if (br->y <= 0 || br->x <= 0)
+		// 	return ;
+		
+		// 	//if_error("Going out of screen!");
+		// br->x = br->x + br->move_x;
+		// br->y = br->y + br->move_y;
+		if (br->x > 0 && br->y > 0 && br->y < HEIGHT && br->x < WIDTH)
+			mlx_put_pixel(g_img, br->x, br->y, WHITE);
 		br->i++;
 	}
 }
 
-void	loop_y_oct(t_str *info, t_br *br)
+void	loop_y_oct(/*t_str *info,*/ t_br *br, mlx_image_t *g_img)
 {
 	while (br->y < br->ye)
 	{
@@ -47,12 +55,21 @@ void	loop_y_oct(t_str *info, t_br *br)
 				br->x = br->x - 1;
 			br->py = br->py + 2 * (br->dx1 - br->dy1);
 		}
-		pixel_put(info, &br->x, &br->y, WHITE);
+		// pixel_put(info, &br->x, &br->y, WHITE);
+		// if (br->y <= 0 || br->x <= 0)
+		// 	return ;
+		
+		// 	//if_error("Going out of screen!");
+		// br->x = br->x + br->move_x;
+		// br->y = br->y + br->move_y;
+		if (br->x > 0 && br->y > 0 && br->y < HEIGHT && br->x < WIDTH)
+			mlx_put_pixel(g_img, br->x, br->y, WHITE);
+	
 		br->i++;
 	}
 }
 
-void	br_x_axis_dominant(t_str *info, t_br *br)
+void	br_x_axis_dominant(/*t_str *info,*/ t_br *br, mlx_image_t *g_img)
 {
 	if (br->dx >= 0)
 	{
@@ -66,11 +83,19 @@ void	br_x_axis_dominant(t_str *info, t_br *br)
 		br->y = br->y2;
 		br->xe = br->x1;
 	}
-	pixel_put(info, &br->x, &br->y, WHITE);
-	loop_x_oct(info, br);
+	//pixel_put(info, &br->x, &br->y, WHITE);
+	// if (br->y <= 0 || br->x <= 0)
+	// 	return ;
+	
+	// 	//if_error("Going out of screen!");
+	// br->x = br->x + br->move_x;
+	// br->y = br->y + br->move_y;
+	if (br->x > 0 && br->y > 0 && br->y < HEIGHT && br->x < WIDTH)
+		mlx_put_pixel(g_img, br->x, br->y, WHITE);
+	loop_x_oct(/*info,*/ br, g_img);
 }
 
-void	br_y_axis_dominant(t_str *info, t_br *br)
+void	br_y_axis_dominant(/*t_str *info,*/ t_br *br, mlx_image_t *g_img)
 {
 	if (br->dy >= 0)
 	{
@@ -84,12 +109,22 @@ void	br_y_axis_dominant(t_str *info, t_br *br)
 		br->y = br->y2;
 		br->ye = br->y1;
 	}
-	pixel_put(info, &br->x, &br->y, WHITE);
-	loop_y_oct(info, br);
+	//pixel_put(info, &br->x, &br->y, WHITE);
+	// if (br->y <= 0 || br->x <= 0)
+	// 	return ;
+	
+	// 	//if_error("Going out of screen!");
+	// br->x = br->x + br->move_x;
+	// br->y = br->y + br->move_y;
+	if (br->x > 0 && br->y > 0 && br->y < HEIGHT && br->x < WIDTH)
+		mlx_put_pixel(g_img, br->x, br->y, WHITE);
+	loop_y_oct(/*info,*/ br, g_img);
 }
 
-void	bresenham(t_br *br, t_str *info)
+void	bresenham(t_br *br, /*t_str *info,*/ mlx_image_t *g_img)
 {
+	// if (br->y2 <= 0 || br->x2 <= 0)
+	// 	if_error("Going out of screen!");
 	br->dx = br->x2 - br->x1;
 	br->dy = br->y2 - br->y1;
 	if (br->dx < 0)
@@ -104,7 +139,7 @@ void	bresenham(t_br *br, t_str *info)
 	br->py = 2 * br->dx1 - br->dy1;
 	br->i = 0;
 	if (br->dy1 <= br->dx1)
-		br_x_axis_dominant(info, br);
+		br_x_axis_dominant(/*info,*/ br, g_img);
 	else
-		br_y_axis_dominant(info, br);
+		br_y_axis_dominant(/*info, */br, g_img);
 }

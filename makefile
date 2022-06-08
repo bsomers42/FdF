@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/22 10:36:12 by bsomers       #+#    #+#                  #
-#    Updated: 2022/06/01 16:38:00 by bsomers       ########   odam.nl          #
+#    Updated: 2022/06/08 18:15:05 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = FdF
 
 LIBFT = libft
 
-LIBMLX = libmlx
+LIBMLX42 = libmlx42
 
 SRC = FdF.c \
 		FdF_utils.c \
@@ -24,14 +24,14 @@ SRC = FdF.c \
 
 HEADER = FdF.h
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT).a $(LIBMLX).a
-		$(CC) $(CFLAGS) -Lmlx -lmlx -framework OpenGL -framework AppKit -L. -lft $(OBJ) -o $(NAME)
+$(NAME): $(OBJ) $(LIBFT).a $(LIBMLX42).a
+		$(CC) $(CFLAGS) libmlx42.a -I include -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. -lft $(OBJ) -o $(NAME) -g3
 
 %.o: %.c $(HEADER)
 		$(CC) -Imlx -c $(CFLAGS) -o $@ $<
@@ -40,9 +40,9 @@ $(LIBFT).a:
 	@make -C $(LIBFT)
 	@cp $(LIBFT)/$(LIBFT).a .
 
-$(LIBMLX).a:
-	@make -C ./mlx
-	@cp ./mlx/$(LIBMLX).a .
+$(LIBMLX42).a:
+	@make -C ./MLX42
+	@cp ./MLX42/$(LIBMLX42).a .
 
 clean:
 		rm -f $(OBJ)
@@ -53,7 +53,7 @@ clean:
 fclean: clean
 		rm -f $(NAME)
 		rm -f $(LIBFT).a
-		rm -f $(LIBMLX).a
+		rm -f $(LIBMLX42).a
 		@make fclean -C $(LIBFT)
 
 re:
