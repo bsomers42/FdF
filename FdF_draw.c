@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/09 12:15:05 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/06/08 20:18:55 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/06/09 17:34:52 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,37 +31,27 @@ void	calc_coord(t_draw *draw, int z, /*t_str *info,*/ t_br *br, mlx_image_t *g_i
 {
 	int	prev_x;
 	int	prev_y;
-	// int	color;
 
 	prev_x = draw->x;
 	prev_y = draw->y;
-	if (z <= 0)
+	if (z < 0)
 		z = z - draw->z_key;
 	else if (z > 0)
 		z = z + draw->z_key;
-	// color = pick_color(z);
 	draw->x = (prev_x - prev_y) * cos(0.523599);
 	draw->y = -z + (prev_x + prev_y) * sin(0.523599);
-	//pixel_put(info, &draw->x, &draw->y, 0x0fffffe);
-	//ft_printf("Draw->x: %d, draw->y: %d\n", draw->x, draw->y);
-	mlx_put_pixel(g_img, draw->x, draw->y, WHITE);
+	if (draw->x > 0 && draw->y > 0 && draw->y < HEIGHT && draw->x < WIDTH)
+		mlx_put_pixel(g_img, draw->x, draw->y, draw->color);
+	else
+		if_error("Going outside window!\n");
 	br->x1 = draw->x_prev;
 	br->x2 = draw->x;
 	br->y1 = draw->y_prev;
 	br->y2 = draw->y;
 	if (draw->y_prev > 0 && draw->x_prev < draw->x)
-		bresenham(br, /*info,*/ g_img);
+		bresenham(br, g_img, draw->color);
 	draw->x_prev = draw->x;
 	draw->y_prev = draw->y;
-}
-
-void	calc_rib(t_draw *draw)
-{
-	long long avg;
-
-	avg = (draw->x + draw-> y) / 2;
-	draw->rib = (WIDTH + HEIGHT) / avg;
-	ft_printf("Draw->rib: %d\n", draw->rib);
 }
 
 void	coord_and_horiz_lines(t_draw *draw, t_map *map, /*t_str *info,*/ t_br *br, mlx_image_t *g_img)
@@ -108,7 +98,7 @@ void	vert_lines(t_draw *draw, t_map *map, /*t_str *info,*/ t_br *br, mlx_image_t
 			br->x2 = draw->map_x[j][i];
 			br->y1 = draw->map_y[j - 1][i];
 			br->y2 = draw->map_y[j][i];
-			bresenham(br, /*info,*/ g_img);
+			bresenham(br, /*info,*/ g_img, draw->color);
 			j++;
 		}
 		j = 1;
@@ -125,6 +115,7 @@ void	make_raster(t_draw *draw, t_map *map, t_br *br,/*t_str *info, */mlx_image_t
 	i = 0;
 	j = 0;
 	// ft_printf("HereValue of move x & y: %d, %d\n", br.move_x, br.move_y);
+	printf("Color %d\n", draw->color);
 
 	draw->map_x = malloc(map->y * sizeof(int *));
 	draw->map_y = malloc(map->y * sizeof(int *));

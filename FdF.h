@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/22 13:51:39 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/06/08 20:15:17 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/06/09 17:27:15 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,17 @@
 
 # include "./libft/libft.h"
 # include "./MLX42/include/MLX42/MLX42.h"
-#include <stdlib.h>
-#include <math.h>
+# include <stdlib.h>
+# include <math.h>
 
-#define GREEN 0x289906
-#define RED 0xeb4034
-#define WHITE 0xFFFFFFFF//0x0fffffe
-#define BLUE 0x00FFFF
-#define BROWN 0x997106
-#define HEIGHT 1080
-#define WIDTH 1920
+# define GREEN 0x39BD00FF
+# define RED 0xFF0000FF
+# define WHITE 0xFFFFFFFF
+# define BLACK 0x000000FF
+# define BLUE 0x0000FFFF
+# define YELLOW 0xFFFF00FF
+# define HEIGHT 1080
+# define WIDTH 1920
 
 typedef struct	s_str
 {
@@ -36,15 +37,6 @@ typedef struct	s_str
 	int endian;
 
 }				t_str;
-
-// typedef struct mlx
-// {
-//     void*	window;     // Window pointer, only really relevant to MLX itself.
-//     void*	context;    // Abstracted data only relevant to MLX & OpenGL.
-//     int32_t	width;      // The current width of the window, gets updated on resize.
-//     int32_t	height;     // The current height of the window, gets updated on resize.
-//     double	delta_time; // The time it took to draw the last frame, useful to interpolations.
-// }   mlx_t;
 
 typedef struct	s_map
 {
@@ -66,7 +58,8 @@ typedef struct	s_draw
 	int **map_y;
 	int z_key;
 	int zoom;
-	int col;
+	int color;
+	int c_key;
 	void *g_img;
 
 }				t_draw;
@@ -78,8 +71,6 @@ typedef struct	s_press
 	struct s_br *ptrbr;
 	void *mlx;
 }				t_press;
-
-//struct s_draw *press;
 
 typedef struct	s_br
 {
@@ -104,11 +95,8 @@ typedef struct	s_br
 }				t_br;
 
 void    if_error(char *str);
-int	parse_map(char *argv[], t_map *map);
-void	pixel_put(t_str *info, int *x, int *y, int color);
-//void	make_raster(t_draw *draw, t_map *map, t_str *info);
+int		parse_map(char *argv[], t_map *map);
 void	make_raster(t_draw *draw, t_map *map, t_br *br,/*t_str *info, */mlx_image_t *g_img);
-void	bresenham(t_br *br, /*t_str *info,*/ mlx_image_t *g_img);
-//void	bresenham(t_br *br, t_str *info);
+void	bresenham(t_br *br, /*t_str *info,*/ mlx_image_t *g_img, int color);
 
 #endif
