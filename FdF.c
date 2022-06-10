@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/22 10:32:41 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/06/09 17:25:25 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/06/10 12:17:35 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,45 +37,21 @@ void	fdf_keyhook(mlx_key_data_t keydata, void* param)
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		exit(EXIT_SUCCESS);
 	else if (keydata.key == MLX_KEY_PAGE_UP && keydata.action == MLX_PRESS)
-	{
 		press->ptr->z_key = press->ptr->z_key + 5;
-		printf("z_key: %d\n", press->ptr->z_key);
-	}
 	else if (keydata.key == MLX_KEY_PAGE_DOWN && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-	{
 		press->ptr->z_key = press->ptr->z_key - 5;
-		printf("z_key: %d\n", press->ptr->z_key);
-	}
 	else if (keydata.key == MLX_KEY_EQUAL && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-	{
 		press->ptr->zoom = press->ptr->zoom + 1;
-		printf("zoom: %d\n", press->ptr->zoom);
-	}
 	else if (keydata.key == MLX_KEY_MINUS && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-	{
 		press->ptr->zoom = press->ptr->zoom - 1;
-		printf("zoom: %d\n", press->ptr->zoom);
-	}
 	else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-	{
 		press->ptrbr->move_x = press->ptrbr->move_x + 10;
-		printf("move right: %d\n", press->ptrbr->move_x);
-	}
 	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-	{
 		press->ptrbr->move_x = press->ptrbr->move_x - 10;
-		printf("move left: %d\n", press->ptrbr->move_x);
-	}
 	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-	{
 		press->ptrbr->move_y = press->ptrbr->move_y + 10;
-		printf("move down: %d\n", press->ptrbr->move_y);
-	}
 	else if (keydata.key == MLX_KEY_W && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-	{
 		press->ptrbr->move_y = press->ptrbr->move_y - 10;
-		printf("move up: %d\n", press->ptrbr->move_y);
-	}
 	else if (keydata.key == MLX_KEY_C && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
 	{
 		if (press->ptr->c_key < 5)
@@ -109,6 +85,11 @@ void	write_instructions(t_press *press)
 	mlx_put_string(press->mlx, "Change color: [C]", 24, 150);
 }
 
+void	func_atexit(void)
+{
+	system("leaks FdF");
+}
+
 int	main(int argc, char *argv[])
 {
 	t_map	map;
@@ -128,6 +109,7 @@ int	main(int argc, char *argv[])
 	draw.zoom = 10;
 	br.move_x = 0;
 	br.move_y = 0;
+	atexit(func_atexit);
 	press.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
 	if (!press.mlx)
 		if_error("Could not init MLX");
@@ -139,4 +121,5 @@ int	main(int argc, char *argv[])
 	mlx_loop(press.mlx);
 	mlx_delete_image(press.mlx, draw.g_img); // Once the application request an exit, cleanup.
 	mlx_terminate(press.mlx);
+	free_structs(/*&draw,*/ &map);
 }

@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/22 10:36:12 by bsomers       #+#    #+#                  #
-#    Updated: 2022/06/08 18:15:05 by bsomers       ########   odam.nl          #
+#    Updated: 2022/06/10 13:42:45 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT).a $(LIBMLX42).a
-		$(CC) $(CFLAGS) libmlx42.a -I include -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. -lft $(OBJ) -o $(NAME) -g3
+		$(CC) $(CFLAGS) libmlx42.a -I include -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. -lft $(OBJ) -o $(NAME)
 
 %.o: %.c $(HEADER)
 		$(CC) -Imlx -c $(CFLAGS) -o $@ $<
@@ -47,7 +47,7 @@ $(LIBMLX42).a:
 clean:
 		rm -f $(OBJ)
 		@make clean -C $(LIBFT)
-		@make clean -C ./mlx
+		@make clean -C ./MLX42
 
 
 fclean: clean

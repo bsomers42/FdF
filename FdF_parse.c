@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/04 14:59:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/05/16 14:51:49 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/06/10 13:24:40 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	check_and_convert_map(t_map *map, char ***sep_lines, int x, int y)
 			//ft_printf("%d ", map->map[i][j]);
 			j++;
 		}
+		free_array(sep_lines[i]);
 		j = 0;
 		i++;
 	}
@@ -108,8 +109,8 @@ char	*get_map(char *argv[])
 		if (i == 0)
 			strdef = ft_strdup(str);
 		else
-			strdef = ft_strjoin(strdef, str);
-		ft_printf("strdef:\n %s\n", strdef);
+			strdef = ft_strjoin_fr(strdef, str);
+		// ft_printf("strdef:\n %s\n", strdef);
 		free (str);
 		i++;
 	}
@@ -142,6 +143,6 @@ int	parse_map(char *argv[], t_map *map)
 	ft_printf("X: %d\n", map->x);
 	/*map_int =*/check_and_convert_map(map, sep_lines, map->x, map->y);
 	ft_printf("==[%d]================================== ", map->map[2][3]);
-
+	free(sep_lines);
 	return (0);
 }

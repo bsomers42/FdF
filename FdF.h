@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/22 13:51:39 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/06/09 17:27:15 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/06/10 12:17:24 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,7 @@ void    if_error(char *str);
 int		parse_map(char *argv[], t_map *map);
 void	make_raster(t_draw *draw, t_map *map, t_br *br,/*t_str *info, */mlx_image_t *g_img);
 void	bresenham(t_br *br, /*t_str *info,*/ mlx_image_t *g_img, int color);
+void    free_structs(/*t_draw *draw,*/ t_map *map);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/01 16:12:07 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/06/09 17:34:48 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/06/10 10:48:18 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	loop_x_oct(/*t_str *info, */t_br *br, mlx_image_t *g_img, int color)
 		// br->y = br->y + br->move_y;
 		if (br->x > 0 && br->y > 0 && br->y < HEIGHT && br->x < WIDTH)
 			mlx_put_pixel(g_img, br->x, br->y, color);
-		else
-			if_error("Going outside window!\n");
+		// else
+		// 	if_error("Going outside window!\n");
 		br->i++;
 	}
 }
@@ -66,8 +66,8 @@ void	loop_y_oct(/*t_str *info,*/ t_br *br, mlx_image_t *g_img, int color)
 		// br->y = br->y + br->move_y;
 		if (br->x > 0 && br->y > 0 && br->y < HEIGHT && br->x < WIDTH)
 			mlx_put_pixel(g_img, br->x, br->y, color);
-		else
-			if_error("Going outside window!\n");
+		// else
+		// 	if_error("Going outside window!\n");
 		br->i++;
 	}
 }
@@ -95,8 +95,8 @@ void	br_x_axis_dominant(/*t_str *info,*/ t_br *br, mlx_image_t *g_img, int color
 	// br->y = br->y + br->move_y;
 	if (br->x > 0 && br->y > 0 && br->y < HEIGHT && br->x < WIDTH)
 		mlx_put_pixel(g_img, br->x, br->y, color);
-	else
-		if_error("Going outside window!\n");
+	// else
+	// 	if_error("Going outside window!\n");
 	loop_x_oct(/*info,*/ br, g_img, color);
 }
 
@@ -123,8 +123,8 @@ void	br_y_axis_dominant(/*t_str *info,*/ t_br *br, mlx_image_t *g_img, int color
 	// br->y = br->y + br->move_y;
 	if (br->x > 0 && br->y > 0 && br->y < HEIGHT && br->x < WIDTH)
 		mlx_put_pixel(g_img, br->x, br->y, color);
-	else
-		if_error("Going outside window!\n");
+	// else
+	// 	if_error("Going outside window!\n");
 	loop_y_oct(/*info,*/ br, g_img, color);
 }
 

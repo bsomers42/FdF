@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/09 12:15:05 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/06/09 17:34:52 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/06/10 14:09:05 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	calc_coord(t_draw *draw, int z, /*t_str *info,*/ t_br *br, mlx_image_t *g_i
 	draw->y = -z + (prev_x + prev_y) * sin(0.523599);
 	if (draw->x > 0 && draw->y > 0 && draw->y < HEIGHT && draw->x < WIDTH)
 		mlx_put_pixel(g_img, draw->x, draw->y, draw->color);
-	else
-		if_error("Going outside window!\n");
+	// else
+	// 	if_error("Going outside window!\n");
 	br->x1 = draw->x_prev;
 	br->x2 = draw->x;
 	br->y1 = draw->y_prev;
@@ -61,17 +61,17 @@ void	coord_and_horiz_lines(t_draw *draw, t_map *map, /*t_str *info,*/ t_br *br, 
 
 	i = 0;
 	j = 0;
-	draw->x = 150; //Starting positions of drawing, needs to be a calculation!
-	draw->y = 10;
+	draw->x = 700; //Starting positions of drawing, needs to be a calculation!
+	draw->y = -200;
 	draw->y_prev = -1;
-	ft_printf("Value of move x & y: %d, %d\n", br->move_x, br->move_y);
+	// ft_printf("Value of move x & y: %d, %d\n", br->move_x, br->move_y);
 
 	while (i < map->y)
 	{
 		while (j < map->x)
 		{
-			draw->x = 200 + j * 14 * (0.1 * draw->zoom) + br->move_x;//draw->rib;//14; //Deze 14 bepaalt de grootte van de vakjes
-			draw->y = 10 + i * 14 * (0.1 * draw->zoom) + br->move_y;//draw->rib;//14;
+			draw->x = 700 + j * 14 * (0.1 * draw->zoom) + br->move_x;//draw->rib;//14; //Deze 14 bepaalt de grootte van de vakjes
+			draw->y = -200 + i * 14 * (0.1 * draw->zoom) + br->move_y;//draw->rib;//14;
 			calc_coord(draw, map->map[i][j], /*info,*/ br, g_img);
 			draw->map_x[i][j] = draw->x;
 			draw->map_y[i][j] = draw->y;
@@ -106,30 +106,28 @@ void	vert_lines(t_draw *draw, t_map *map, /*t_str *info,*/ t_br *br, mlx_image_t
 	}
 }
 
-void	make_raster(t_draw *draw, t_map *map, t_br *br,/*t_str *info, */mlx_image_t *g_img)
+void	make_raster(t_draw *draw, t_map *map, t_br *br, mlx_image_t *g_img)
 {
-	// t_br	br;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
-	// ft_printf("HereValue of move x & y: %d, %d\n", br.move_x, br.move_y);
-	printf("Color %d\n", draw->color);
-
 	draw->map_x = malloc(map->y * sizeof(int *));
 	draw->map_y = malloc(map->y * sizeof(int *));
 	while (i < map->y)
 	{
-		while (j < map->x)
-		{
-			draw->map_x[i] = malloc(map->x * sizeof(int));
-			draw->map_y[i] = malloc(map->x * sizeof(int));
-			j++;
-		}
-		j = 0;
+		draw->map_x[i] = malloc(map->x * sizeof(int));
+		draw->map_y[i] = malloc(map->x * sizeof(int));
 		i++;
 	}
-	coord_and_horiz_lines(draw, map, /*info,*/ br, g_img);
-	vert_lines(draw, map, /*info,*/ br, g_img);
+	coord_and_horiz_lines(draw, map, br, g_img);
+	vert_lines(draw, map, br, g_img);
+	i = 0;
+	while (i < map->y)
+	{
+		free(draw->map_x[i]);
+		free(draw->map_y[i]);
+		i++;
+	}
+	free(draw->map_y);
+    free(draw->map_x);
 }
