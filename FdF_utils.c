@@ -6,41 +6,41 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/22 10:42:37 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/06/10 13:49:30 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/06/10 15:07:59 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "FdF.h"
 
-void    if_error(char *str)
+void	malloc_map(t_map *map, int x, int y)
 {
-    ft_putstr_fd("\033[0;\e[1mFdF Error: \e[0m", 2);
-    ft_putstr_fd(str, 2);
-    exit(EXIT_FAILURE);
+	int	i;
+
+	i = 0;
+	map->map = malloc(y * sizeof(int *));
+	while (i < y)
+	{
+		map->map[i] = malloc(x * sizeof(int));
+		i++;
+	}
 }
 
-void    free_structs(/*t_draw *draw, */t_map *map)
+void	if_error(char *str)
 {
-   	int i;
-    int j;
-    j = 0;
-	i = 0;
+	ft_putstr_fd("\033[0;\e[1mfdf Error: \e[0m", 2);
+	ft_putstr_fd(str, 2);
+	exit(EXIT_FAILURE);
+}
 
-   	// while (draw->map_x[i])
-	// {
-	// 	free(draw->map_x[i]);
-    //     free(draw->map_y[i]);
-	// 	i++;
-    //     j = 0;
-	// }
-	// free(draw->map_y);
-    // free(draw->map_x);
-    // i = 0;
-    // j = 0;
+void	free_struct(t_map *map)
+{
+	int	i;
+
+	i = 0;
 	while (map->map[i])
 	{
 		free(map->map[i]);
 		i++;
-    }
-    free(map->map);
+	}
+	free(map->map);
 }

@@ -6,13 +6,13 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/01 16:12:07 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/06/10 10:48:18 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/06/10 14:46:37 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "FdF.h"
 
-void	loop_x_oct(/*t_str *info, */t_br *br, mlx_image_t *g_img, int color)
+void	loop_x_oct(t_br *br, mlx_image_t *g_img, int color)
 {
 	while (br->x < br->xe)
 	{
@@ -27,22 +27,13 @@ void	loop_x_oct(/*t_str *info, */t_br *br, mlx_image_t *g_img, int color)
 				br->y = br->y - 1;
 			br->px = br->px + 2 * (br->dy1 - br->dx1);
 		}
-		//pixel_put(info, &br->x, &br->y, GREEN);
-		// if (br->y <= 0 || br->x <= 0)
-		// 	return ;
-		
-		// 	//if_error("Going out of screen!");
-		// br->x = br->x + br->move_x;
-		// br->y = br->y + br->move_y;
 		if (br->x > 0 && br->y > 0 && br->y < HEIGHT && br->x < WIDTH)
 			mlx_put_pixel(g_img, br->x, br->y, color);
-		// else
-		// 	if_error("Going outside window!\n");
 		br->i++;
 	}
 }
 
-void	loop_y_oct(/*t_str *info,*/ t_br *br, mlx_image_t *g_img, int color)
+void	loop_y_oct(t_br *br, mlx_image_t *g_img, int color)
 {
 	while (br->y < br->ye)
 	{
@@ -57,22 +48,13 @@ void	loop_y_oct(/*t_str *info,*/ t_br *br, mlx_image_t *g_img, int color)
 				br->x = br->x - 1;
 			br->py = br->py + 2 * (br->dx1 - br->dy1);
 		}
-		// pixel_put(info, &br->x, &br->y, GREEN);
-		// if (br->y <= 0 || br->x <= 0)
-		// 	return ;
-		
-		// 	//if_error("Going out of screen!");
-		// br->x = br->x + br->move_x;
-		// br->y = br->y + br->move_y;
 		if (br->x > 0 && br->y > 0 && br->y < HEIGHT && br->x < WIDTH)
 			mlx_put_pixel(g_img, br->x, br->y, color);
-		// else
-		// 	if_error("Going outside window!\n");
 		br->i++;
 	}
 }
 
-void	br_x_axis_dominant(/*t_str *info,*/ t_br *br, mlx_image_t *g_img, int color)
+void	br_x_axis_dominant(t_br *br, mlx_image_t *g_img, int color)
 {
 	if (br->dx >= 0)
 	{
@@ -86,21 +68,12 @@ void	br_x_axis_dominant(/*t_str *info,*/ t_br *br, mlx_image_t *g_img, int color
 		br->y = br->y2;
 		br->xe = br->x1;
 	}
-	//pixel_put(info, &br->x, &br->y, GREEN);
-	// if (br->y <= 0 || br->x <= 0)
-	// 	return ;
-	
-	// 	//if_error("Going out of screen!");
-	// br->x = br->x + br->move_x;
-	// br->y = br->y + br->move_y;
 	if (br->x > 0 && br->y > 0 && br->y < HEIGHT && br->x < WIDTH)
 		mlx_put_pixel(g_img, br->x, br->y, color);
-	// else
-	// 	if_error("Going outside window!\n");
-	loop_x_oct(/*info,*/ br, g_img, color);
+	loop_x_oct(br, g_img, color);
 }
 
-void	br_y_axis_dominant(/*t_str *info,*/ t_br *br, mlx_image_t *g_img, int color)
+void	br_y_axis_dominant(t_br *br, mlx_image_t *g_img, int color)
 {
 	if (br->dy >= 0)
 	{
@@ -114,24 +87,13 @@ void	br_y_axis_dominant(/*t_str *info,*/ t_br *br, mlx_image_t *g_img, int color
 		br->y = br->y2;
 		br->ye = br->y1;
 	}
-	//pixel_put(info, &br->x, &br->y, GREEN);
-	// if (br->y <= 0 || br->x <= 0)
-	// 	return ;
-	
-	// 	//if_error("Going out of screen!");
-	// br->x = br->x + br->move_x;
-	// br->y = br->y + br->move_y;
 	if (br->x > 0 && br->y > 0 && br->y < HEIGHT && br->x < WIDTH)
 		mlx_put_pixel(g_img, br->x, br->y, color);
-	// else
-	// 	if_error("Going outside window!\n");
-	loop_y_oct(/*info,*/ br, g_img, color);
+	loop_y_oct(br, g_img, color);
 }
 
-void	bresenham(t_br *br, /*t_str *info,*/ mlx_image_t *g_img, int color)
+void	bresenham(t_br *br, mlx_image_t *g_img, int color)
 {
-	// if (br->y2 <= 0 || br->x2 <= 0)
-	// 	if_error("Going out of screen!");
 	br->dx = br->x2 - br->x1;
 	br->dy = br->y2 - br->y1;
 	if (br->dx < 0)
@@ -146,7 +108,7 @@ void	bresenham(t_br *br, /*t_str *info,*/ mlx_image_t *g_img, int color)
 	br->py = 2 * br->dx1 - br->dy1;
 	br->i = 0;
 	if (br->dy1 <= br->dx1)
-		br_x_axis_dominant(/*info,*/ br, g_img, color);
+		br_x_axis_dominant(br, g_img, color);
 	else
-		br_y_axis_dominant(/*info, */br, g_img, color);
+		br_y_axis_dominant(br, g_img, color);
 }

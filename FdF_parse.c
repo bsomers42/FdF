@@ -6,43 +6,28 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/04 14:59:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/06/10 13:24:40 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/06/10 15:04:35 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "FdF.h"
-#include <stdio.h> //Weeggegegeg
 
 int	check_and_convert_map(t_map *map, char ***sep_lines, int x, int y)
 {
 	int	i;
 	int	j;
-	// int **map_int;
-	int temp;
+	int	temp;
 
 	i = 0;
 	j = 0;
 	temp = 0;
-	//map_int = malloc(y * sizeof(int *));
-	map->map = malloc(y * sizeof(int *));
-	while (i < y)
-	{
-		// map_int[i] = malloc(x * sizeof(int));
-		map->map[i] = malloc(x * sizeof(int));
-		i++;
-
-	}
-	i = 0;
+	malloc_map(map, x, y);
 	while (i < y)
 	{
 		while (j < x)
 		{
-				// if (isnumber(sep_lines[i][j][0] == 0)) DOES NOT WORK??
-				// 	if_error("Invalid map");
 			temp = ft_atoi(sep_lines[i][j]);
-			//map_int[i][j] = temp;
 			map->map[i][j] = temp;
-			//ft_printf("%d ", map->map[i][j]);
 			j++;
 		}
 		free_array(sep_lines[i]);
@@ -55,8 +40,8 @@ int	check_and_convert_map(t_map *map, char ***sep_lines, int x, int y)
 int	get_x(char ***sep_lines, int y)
 {
 	int	x;
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	x = 0;
 	i = 0;
@@ -66,7 +51,7 @@ int	get_x(char ***sep_lines, int y)
 		while (sep_lines[i][j])
 			j++;
 		if (i > 0 && j != x)
-			if_error("Invalid map");
+			if_error("Invalid map\n");
 		x = j;
 		j = 0;
 		i++;
@@ -76,8 +61,8 @@ int	get_x(char ***sep_lines, int y)
 
 int	get_y(char *map)
 {
-	int i;
-	int y;
+	int	i;
+	int	y;
 
 	i = 0;
 	y = 0;
@@ -87,18 +72,19 @@ int	get_y(char *map)
 			y++;
 		i++;
 	}
-	ft_printf("Lines(y): %d\n", y);
 	return (y);
 }
 
 char	*get_map(char *argv[])
 {
-	char *str;
-	char *strdef;
-	int	fd;
-	int i;
+	char	*str;
+	char	*strdef;
+	int		fd;
+	int		i;
 
 	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		if_error("Map does not exist\n");
 	str = "x";
 	i = 0;
 	while (str)
@@ -110,7 +96,6 @@ char	*get_map(char *argv[])
 			strdef = ft_strdup(str);
 		else
 			strdef = ft_strjoin_fr(strdef, str);
-		// ft_printf("strdef:\n %s\n", strdef);
 		free (str);
 		i++;
 	}
@@ -119,13 +104,10 @@ char	*get_map(char *argv[])
 
 int	parse_map(char *argv[], t_map *map)
 {
-	char *map_c;
-	char **lines;
-	char ***sep_lines;
-	// int	**map_int;
-	// int	y;
-	//int	x;
-	int	i;
+	char	*map_c;
+	char	**lines;
+	char	***sep_lines;
+	int		i;
 
 	map_c = get_map(argv);
 	i = 0;
@@ -140,9 +122,7 @@ int	parse_map(char *argv[], t_map *map)
 	}
 	free_array(lines);
 	map->x = get_x(sep_lines, map->y);
-	ft_printf("X: %d\n", map->x);
-	/*map_int =*/check_and_convert_map(map, sep_lines, map->x, map->y);
-	ft_printf("==[%d]================================== ", map->map[2][3]);
+	check_and_convert_map(map, sep_lines, map->x, map->y);
 	free(sep_lines);
 	return (0);
 }

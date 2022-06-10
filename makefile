@@ -6,11 +6,11 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/22 10:36:12 by bsomers       #+#    #+#                  #
-#    Updated: 2022/06/10 13:42:45 by bsomers       ########   odam.nl          #
+#    Updated: 2022/06/10 15:08:10 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = FdF
+NAME = fdf
 
 LIBFT = libft
 
@@ -20,7 +20,8 @@ SRC = FdF.c \
 		FdF_utils.c \
 		FdF_parse.c \
 		FdF_draw.c \
-		FdF_bresenham.c
+		FdF_bresenham.c \
+		FdF_user_input.c
 
 HEADER = FdF.h
 
