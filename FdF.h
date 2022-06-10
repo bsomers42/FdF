@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/22 13:51:39 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/06/10 14:51:30 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/06/10 16:02:28 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_draw
 	int		y;
 	int		x_prev;
 	int		y_prev;
-	int		rib;
 	int		**map_x;
 	int		**map_y;
 	int		z_key;
@@ -79,7 +78,6 @@ typedef struct s_br
 	int	x2;
 	int	y1;
 	int	y2;
-	int	move_start;
 	int	move_x;
 	int	move_y;
 }				t_br;
